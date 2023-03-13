@@ -110,7 +110,7 @@ export function MetaChatProvider({ children }: Props) {
     };
 
     (async () => {
-      if (account) return;
+      if (!account) return;
       contract = await connectWithContract();
       contract?.on("ChatSent", handleEvent);
     })();
