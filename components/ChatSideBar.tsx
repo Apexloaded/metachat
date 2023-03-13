@@ -7,14 +7,12 @@ import {
   IoChatboxEllipsesOutline,
   IoAddOutline,
 } from "react-icons/io5";
-import Moment from "react-moment";
 import { useMetaChatProvider } from "../context/metaChat.context";
 import { showchatState } from "../atom/showchatAtom";
 import { newcontactState } from "../atom/newcontactAtom";
 import NewContact from "./NewContact";
 import { FriendInterface } from "../interface/users.interface";
 import { currentChatState } from "../atom/currentChatAtom";
-import { convertTime } from "../services/metaChat.services";
 import FriendList from "./FriendList";
 
 const ChatSideBar = () => {
@@ -22,7 +20,7 @@ const ChatSideBar = () => {
   const [displayChat, setDisplayChat] = useRecoilState(showchatState);
   const [currentChat, setCurrentChat] = useRecoilState(currentChatState);
   const [isOpen, setIsOpen] = useRecoilState(newcontactState);
-  const { friendLists, friendMsg, readMessage } = useMetaChatProvider();
+  const { friendLists } = useMetaChatProvider();
   const [width, setWidth] = useState(0);
 
   const toggle = () => {

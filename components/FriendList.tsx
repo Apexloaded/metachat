@@ -10,7 +10,7 @@ import { convertTime } from "../services/metaChat.services";
 type Props = { contact: FriendInterface };
 
 const FriendList = ({ contact }: Props) => {
-  const { readMessage } = useMetaChatProvider();
+  const { readMessage, setChatEvent, chatEvent } = useMetaChatProvider();
   const [currentChat] = useRecoilState(currentChatState);
   const [lastMsg, setLastMsg] = useState<MessageInterface>();
 
@@ -24,8 +24,8 @@ const FriendList = ({ contact }: Props) => {
         setLastMsg(sortedMsg[0]);
       }
     })();
-  }, [contact, currentChat]);
-  
+  }, [contact, currentChat, chatEvent]);
+
   return (
     <div className="flex justify-between space-x-2 lg:space-x-0">
       <div className="flex truncate w-full md:w-[12rem] lg:w-[18rem] items-center space-x-2">

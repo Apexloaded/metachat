@@ -22,11 +22,11 @@ const Chats = () => {
   const [collapsed, setCollapse] = useRecoilState(sidebarState);
   const [displayChat, setDisplayChat] = useRecoilState(showchatState);
   const [currentChat, setCurrentChat] = useRecoilState(currentChatState);
-  const { readMessage, friendMsg } = useMetaChatProvider();
-  const [chats, setChats] = useState<MessageInterface[]>([]);
-  const toggle = () => {
-    collapsed ? setCollapse(false) : setCollapse(true);
-  };
+  const { readMessage, friendMsg, setFriendMsg } = useMetaChatProvider();
+//   const [chats, setChats] = useState<MessageInterface[]>([]);
+//   const toggle = () => {
+//     collapsed ? setCollapse(false) : setCollapse(true);
+//   };
   const endOfMsgRef = useRef<HTMLParagraphElement>(null);
   const elementRef = useRef(null);
 
@@ -49,8 +49,7 @@ const Chats = () => {
   useEffect(() => {
     if (!currentChat) return;
     (async () => {
-      const msg = await readMessage(currentChat.user.pubkey);
-      setChats(msg);
+      await readMessage(currentChat.user.pubkey);
     })();
   }, [currentChat]);
 
@@ -114,7 +113,7 @@ const Chats = () => {
           </header>
           <section className="flex overflow-scroll px-4 flex-1">
             <div className="w-full" ref={elementRef}>
-              {chats.map((msg: MessageInterface, i: number) => (
+              {friendMsg.map((msg: MessageInterface, i: number) => (
                 <Chat key={i} chat={msg} />
               ))}
               <p
@@ -127,8 +126,8 @@ const Chats = () => {
           </section>
           <SendMessage
             endOfMsgRef={endOfMsgRef}
-            setChats={setChats}
-            chats={chats}
+            setChats={setFriendMsg}
+            chats={friendMsg}
           />
         </div>
       )}

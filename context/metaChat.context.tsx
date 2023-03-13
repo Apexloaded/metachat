@@ -23,6 +23,7 @@ export type MetaChatContextType = {
   sendMessage: (message: string, address: string) => Promise<any>;
   readUserDetails: (address: string) => void;
   setError: Dispatch<SetStateAction<string | undefined>>;
+  setFriendMsg: Dispatch<SetStateAction<MessageInterface[]>>;
   account: string | undefined;
   userName: string | undefined;
   friendLists: FriendInterface[] | undefined;
@@ -34,6 +35,8 @@ export type MetaChatContextType = {
   currentUserAddress: string | undefined;
   connectWallet: () => Promise<any>;
   isWalletConnected: () => Promise<any>;
+  chatEvent: string | undefined;
+  setChatEvent: Dispatch<SetStateAction<string | undefined>>;
 };
 
 interface Props {
@@ -47,7 +50,7 @@ export const MetaChatContext = createContext<MetaChatContextType | undefined>(
 export function MetaChatProvider({ children }: Props) {
   const [userName, setUserName] = useState<string>();
   const [friendLists, setFriendLists] = useState();
-  const [friendMsg, setFriendMsg] = useState([]);
+  const [friendMsg, setFriendMsg] = useState<MessageInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [userList, setUserList] = useState([]);
   const [error, setError] = useState<string>();
@@ -55,6 +58,7 @@ export function MetaChatProvider({ children }: Props) {
   const [currentUserName, setCurrentUserName] = useState<string>();
   const [currentUserAddress, setCurrentUserAddress] = useState<string>();
   const { account, connectWallet, isWalletConnected } = useWalletHook();
+  const [chatEvent, setChatEvent] = useState<string>();
 
   const router = useRouter();
 
@@ -90,16 +94,23 @@ export function MetaChatProvider({ children }: Props) {
   useEffect(() => {
     let contract: Contract | undefined;
 
-    const handleEvent = (chatcode: string, from: string, to: string) => {
+    const handleEvent = (
+      chatcode: string,
+      from: string,
+      to: string,
+      event: any
+    ) => {
       const verifyChatCode = getChatCode(from, to);
       if (verifyChatCode.toString() === chatcode.toString()) {
+        if (from == account) return;
+        setChatEvent(verifyChatCode.toString());
         const address = getMsgAddress(from, to);
         readMessage(address);
       }
     };
 
     (async () => {
-      if(!account) return;
+      if (account) return;
       contract = await connectWithContract();
       contract?.on("ChatSent", handleEvent);
     })();
@@ -107,7 +118,7 @@ export function MetaChatProvider({ children }: Props) {
     return () => {
       if (contract) contract?.off("ChatSent", handleEvent);
     };
-  }, []);
+  }, [account]);
 
   useEffect(() => {
     const w = window as any;
@@ -159,7 +170,11 @@ export function MetaChatProvider({ children }: Props) {
           timestamp: convertTime(msg.timestamp),
         } as MessageInterface;
       });
-      setFriendMsg(fMessages);
+      const sortedMsg: MessageInterface[] = fMessages.sort(
+        (a: MessageInterface, b: MessageInterface) =>
+          a.timestamp.valueOf() - b.timestamp.valueOf()
+      );
+      setFriendMsg(sortedMsg);
       return fMessages;
     } catch (error) {
       console.log(error);
@@ -235,6 +250,7 @@ export function MetaChatProvider({ children }: Props) {
         sendMessage,
         readUserDetails,
         setError,
+        setFriendMsg,
         account,
         userName,
         friendLists,
@@ -246,6 +262,8 @@ export function MetaChatProvider({ children }: Props) {
         currentUserAddress,
         connectWallet,
         isWalletConnected,
+        chatEvent,
+        setChatEvent,
       }}
     >
       {children}
