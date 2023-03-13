@@ -109,15 +109,15 @@ export function MetaChatProvider({ children }: Props) {
       }
     };
 
-    (async () => {
-      if (!account) return;
-      contract = await connectWithContract();
-      contract?.on("ChatSent", handleEvent);
-    })();
+    // (async () => {
+    //   if (!account) return;
+    //   contract = await connectWithContract();
+    //   contract?.on("ChatSent", handleEvent);
+    // })();
 
-    return () => {
-      if (contract) contract?.off("ChatSent", handleEvent);
-    };
+    // return () => {
+    //   if (contract) contract?.off("ChatSent", handleEvent);
+    // };
   }, [account]);
 
   useEffect(() => {
