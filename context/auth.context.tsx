@@ -19,14 +19,14 @@ export const AuthProvider = ({ children }: Props) => {
   const { account } = useWalletHook();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!account) {
-      setIsAuthenticated(false);
-      router.push("/");
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, [account]);
+//   useEffect(() => {
+//     if (!account) {
+//       setIsAuthenticated(false);
+//       router.push("/");
+//     } else {
+//       setIsAuthenticated(true);
+//     }
+//   }, [account]);
 
   return (
     <AuthContext.Provider
