@@ -109,19 +109,21 @@ export function MetaChatProvider({ children }: Props) {
       }
     };
 
-    // (async () => {
-    //   if (!account) return;
-    //   contract = await connectWithContract();
-    //   contract?.on("ChatSent", handleEvent);
-    // })();
+    (async () => {
+      if (!account) return;
+      contract = await connectWithContract();
+      contract?.on("ChatSent", handleEvent);
+    })();
 
-    // return () => {
-    //   if (contract) contract?.off("ChatSent", handleEvent);
-    // };
+    return () => {
+      if (contract) contract?.off("ChatSent", handleEvent);
+    };
   }, [account]);
 
   useEffect(() => {
     const w = window as any;
+    if(!w.ethereum) return;
+    
     const handleDisconnect = (accounts: string[]) => {
       if (accounts && accounts[0]) {
       } else {

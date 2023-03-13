@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     if (!account) {
       setIsAuthenticated(false);
-      //router.push("/");
+      router.push("/");
     } else {
       setIsAuthenticated(true);
     }
