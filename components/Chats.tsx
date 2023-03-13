@@ -60,13 +60,13 @@ const Chats = () => {
           <div className="text-gray-800 border-b-4 border-indigo-600 flex items-center flex-col justify-between text-center min-h-screen">
             <div></div>
             <div>
-              <h1 className="text-3xl font-normal">Nftly Messenger</h1>
+              <h1 className="text-3xl font-normal">Metachat Messenger</h1>
               <p className="text-gray-600 font-normal mt-4">
                 <span className="block">
                   You can now send and recieved encrypted and unsensored
                 </span>
                 <span className="block">
-                  messages on the blockchain with Nftly Messenger
+                  messages on the blockchain with Metachat Messenger
                 </span>
               </p>
             </div>
