@@ -2,7 +2,6 @@ import React from "react";
 import Moment from "react-moment";
 import { useMetaChatProvider } from "../context/metaChat.context";
 import { MessageInterface } from "../interface/message.interface";
-import { convertTime } from "../services/metaChat.services";
 
 type Props = {
   chat: MessageInterface;

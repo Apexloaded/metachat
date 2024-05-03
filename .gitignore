@@ -36,5 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 # Smart contract
-/smart-contract
+/smart-contract/node_modules
+/smart-contracr/artifacts
+/smart-contract/cache
+/smart-contract/env
+/smart-contract/typechain-types
 

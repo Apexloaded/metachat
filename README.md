@@ -1,5 +1,9 @@
 # Meta-Messenger with (Tailwind Ethers Web3Modal RecoilState)
 
+<p align="left">
+<img src="./1.png" width="200">
+<img src="./2.png" width="200">
+</p>
 This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
 
 ## Deploy your own

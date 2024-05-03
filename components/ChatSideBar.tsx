@@ -35,7 +35,6 @@ const ChatSideBar = () => {
     if (width <= 765) {
       setDisplayChat(true);
     }
-    //updateRead(connect);
     setCurrentChat({ user: currentChat, chat: [] });
   };
 

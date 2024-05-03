@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { sidebarState } from "../atom/sidebarAtom";
 import { showchatState } from "../atom/showchatAtom";
 import { IoChevronBackOutline, IoLockClosedOutline } from "react-icons/io5";
 import { useMutationObserver } from "../utils/mutationObserver";
 import SendMessage from "./SendMessage";
 import Chat from "./Chat";
 import {
-  ChatInterface,
   MessageInterface,
 } from "../interface/message.interface";
 import { currentChatState } from "../atom/currentChatAtom";
@@ -19,14 +17,10 @@ type ScrollIntoViewProps = {
 };
 
 const Chats = () => {
-  const [collapsed, setCollapse] = useRecoilState(sidebarState);
   const [displayChat, setDisplayChat] = useRecoilState(showchatState);
-  const [currentChat, setCurrentChat] = useRecoilState(currentChatState);
+  const [currentChat] = useRecoilState(currentChatState);
   const { readMessage, friendMsg, setFriendMsg } = useMetaChatProvider();
-//   const [chats, setChats] = useState<MessageInterface[]>([]);
-//   const toggle = () => {
-//     collapsed ? setCollapse(false) : setCollapse(true);
-//   };
+
   const endOfMsgRef = useRef<HTMLParagraphElement>(null);
   const elementRef = useRef(null);
 
